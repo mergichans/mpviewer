@@ -170,33 +170,34 @@
       mpArr = [];
       uname = "-" + username;
       var xhr = new XMLHttpRequest();
-      var url = "https://animal-jam-api.nl/api/masterpiece/search?domain=" + document.getElementById("domain").value;
+      var url = "https://cors-anywhere.herokuapp.com/https://animal-jam-api.nl/api/masterpiece/search?domain=" + document.getElementById("domain").value;
       xhr.open("POST", url, true);
       xhr.setRequestHeader("Content-Type", "application/json");
       xhr.onreadystatechange = async function () {
         console.log(`Ready state: ${xhr.readyState}, Status: ${xhr.status}`);
-        if (xhr.readyState === 4 && xhr.status === 200) {
-          try {
-            var json = JSON.parse(xhr.responseText);
-            var masterpieces = json.masterpieces;
-            if (masterpieces.length == 0) {
-              document.getElementById("alertUser").innerHTML = `No masterpieces found for ${username}!`;
-              document.getElementById("alertUser").style.display = "block";
-              document.getElementById("search").removeAttribute("disabled");
-              document.getElementById("fromUser").innerHTML = "";
-              return;
-            }
-            document.getElementById("fromUser").innerHTML = "Masterpieces from " + username;
-            var newHTML = document.getElementById("rows").innerHTML;
-            var counter = 0;
-            for (var i = 0; i < masterpieces.length; i++) {
-              var currentMP = masterpieces[i];
-              var data2 = await imageExists(currentMP);
-              while (data2 !== undefined) {
-                if (data2.result == true) {
-                  var currentMPs = document.getElementById("rows").innerHTML;
-                  var moduleName = "myModal" + i;
-                  newHTML = currentMPs += `
+        if (xhr.readyState === 4) {
+          if (xhr.status === 200) {
+            try {
+              var json = JSON.parse(xhr.responseText);
+              var masterpieces = json.masterpieces;
+              if (masterpieces.length == 0) {
+                document.getElementById("alertUser").innerHTML = `No masterpieces found for ${username}!`;
+                document.getElementById("alertUser").style.display = "block";
+                document.getElementById("search").removeAttribute("disabled");
+                document.getElementById("fromUser").innerHTML = "";
+                return;
+              }
+              document.getElementById("fromUser").innerHTML = "Masterpieces from " + username;
+              var newHTML = document.getElementById("rows").innerHTML;
+              var counter = 0;
+              for (var i = 0; i < masterpieces.length; i++) {
+                var currentMP = masterpieces[i];
+                var data2 = await imageExists(currentMP);
+                while (data2 !== undefined) {
+                  if (data2.result == true) {
+                    var currentMPs = document.getElementById("rows").innerHTML;
+                    var moduleName = "myModal" + i;
+                    newHTML = currentMPs += `
               <div class="col-lg-4">
               <div class="testimonial-item mx-auto mb-4 mb-lg-0">
                <img class="img-fluid mb-3" src="${currentMP}" alt="" />
@@ -213,36 +214,41 @@
                     </div>
                   </div>
                 </div>`
-                  mpArr.push(currentMP)
+                    mpArr.push(currentMP)
+                  }
+                  counter++;
+                  if (counter >= 18) {
+                    document.getElementById("rows").innerHTML = newHTML;
+                    counter = 0;
+                  }
+                  break;
                 }
-                counter++;
-                if (counter >= 18) {
-                  document.getElementById("rows").innerHTML = newHTML;
-                  counter = 0;
-                }
-                break;
+                document.getElementById("rows").innerHTML = newHTML;
+                document.getElementById("alertUser").innerHTML = `Successfully retrieved ${username}'s masterpieces!`;
+                document.getElementById("alertUser").style.display = "block";
+                document.getElementById("search").removeAttribute("disabled");
               }
-              document.getElementById("rows").innerHTML = newHTML;
-              document.getElementById("alertUser").innerHTML = `Successfully retrieved ${username}'s masterpieces!`;
-              document.getElementById("alertUser").style.display = "block";
-              document.getElementById("search").removeAttribute("disabled");
-            }
-            document.getElementById("container1").innerHTML = document.getElementById("container1").innerHTML += `
+              document.getElementById("container1").innerHTML = document.getElementById("container1").innerHTML += `
                 <div class="col-12 col-md-5 mx-auto">
                   <button class="btn btn-block btn-lg btn-primary" onclick="downloadAllFiles()" id="exportAll">Export all</button>
                 </div>`;
-          } catch (error) {
-            document.getElementById("alertUser").innerHTML = "Error in retrieving masterpieces! Please try again!";
+            } catch (error) {
+              document.getElementById("alertUser").innerHTML = "Error in retrieving masterpieces! Please try again!";
+              document.getElementById("alertUser").style.display = "block";
+              document.getElementById("search").removeAttribute("disabled");
+              document.getElementById("fromUser").innerHTML = "";
+              console.log(error);
+            }
+          } else if (xhr.status === 503) {
+            document.getElementById("alertUser").innerHTML = `Failed to retrieve ${username}'s masterpieces! Please try again!`;
+            document.getElementById("alertUser").style.display = "block";
+            document.getElementById("fromUser").innerHTML = "";
+            document.getElementById("search").removeAttribute("disabled");
+          } else {
+            document.getElementById("alertUser").innerHTML = `Error: Unable to retrieve masterpieces. Status: ${xhr.status}`;
             document.getElementById("alertUser").style.display = "block";
             document.getElementById("search").removeAttribute("disabled");
-            document.getElementById("fromUser").innerHTML = "";
-            console.log(error);
           }
-        } else if (xhr.readyState === 4 && xhr.status === 503) {
-          document.getElementById("alertUser").innerHTML = `Failed to retrieve ${username}'s masterpieces! Please try again!`;
-          document.getElementById("alertUser").style.display = "block";
-          document.getElementById("fromUser").innerHTML = "";
-          document.getElementById("search").removeAttribute("disabled");
         }
       };
       var data = JSON.stringify({ "user": username });
