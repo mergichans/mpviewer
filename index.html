@@ -173,7 +173,7 @@
       var url = "http://localhost:8080/https://animal-jam-api.nl/api/masterpiece/search?domain=" + document.getElementById("domain").value;
       xhr.open("POST", url, true);
       xhr.setRequestHeader("Content-Type", "application/json");
-      xhr.setRequestHeader("Origin", "http://localhost");
+      xhr.setRequestHeader("x-requested-with", "XMLHttpRequest");
       xhr.onreadystatechange = async function () {
         console.log(`Ready state: ${xhr.readyState}, Status: ${xhr.status}`);
         if (xhr.readyState === 4) {
