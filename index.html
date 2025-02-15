@@ -170,7 +170,7 @@
       mpArr = [];
       uname = "-" + username;
       var xhr = new XMLHttpRequest();
-      var url = "https://cors-anywhere.herokuapp.com/https://animal-jam-api.nl/api/masterpiece/search?domain=" + document.getElementById("domain").value;
+      var url = "http://localhost:8080/https://animal-jam-api.nl/api/masterpiece/search?domain=" + document.getElementById("domain").value;
       xhr.open("POST", url, true);
       xhr.setRequestHeader("Content-Type", "application/json");
       xhr.onreadystatechange = async function () {
