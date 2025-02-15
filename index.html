@@ -170,10 +170,11 @@
       mpArr = [];
       uname = "-" + username;
       var xhr = new XMLHttpRequest();
-      var url = "https://animal-jam-api.nl/api/masterpiece/search?domain="+document.getElementById("domain").value;
+      var url = "https://animal-jam-api.nl/api/masterpiece/search?domain=" + document.getElementById("domain").value;
       xhr.open("POST", url, true);
       xhr.setRequestHeader("Content-Type", "application/json");
       xhr.onreadystatechange = async function () {
+        console.log(`Ready state: ${xhr.readyState}, Status: ${xhr.status}`);
         if (xhr.readyState === 4 && xhr.status === 200) {
           try {
             var json = JSON.parse(xhr.responseText);
@@ -184,7 +185,7 @@
               document.getElementById("search").removeAttribute("disabled");
               document.getElementById("fromUser").innerHTML = "";
               return;
-            };
+            }
             document.getElementById("fromUser").innerHTML = "Masterpieces from " + username;
             var newHTML = document.getElementById("rows").innerHTML;
             var counter = 0;
@@ -237,15 +238,15 @@
             document.getElementById("fromUser").innerHTML = "";
             console.log(error);
           }
-        }
-        else if (xhr.readyState === 4 && xhr.status === 503) {
+        } else if (xhr.readyState === 4 && xhr.status === 503) {
           document.getElementById("alertUser").innerHTML = `Failed to retrieve ${username}'s masterpieces! Please try again!`;
           document.getElementById("alertUser").style.display = "block";
           document.getElementById("fromUser").innerHTML = "";
           document.getElementById("search").removeAttribute("disabled");
         }
       };
-      var data = JSON.stringify({ "user": username});
+      var data = JSON.stringify({ "user": username });
+      console.log(`Sending request to ${url} with data: ${data}`);
       xhr.send(data);
     }
     async function downloadAllFiles() {
@@ -253,7 +254,7 @@
       let zip = new JSZip();
       var counter1 = 0;
       for (let file of mpArr) {
-        let blob = await fetch(`https://animal-jam-api.nl/api/mp-c/${mpArr[counter1].substring(mpArr[counter1].lastIndexOf('/')+1)}.png`).then(r => r.blob());
+        let blob = await fetch(`https://animal-jam-api.nl/api/mp-c/${mpArr[counter1].substring(mpArr[counter1].lastIndexOf('/') + 1)}.png`).then(r => r.blob());
         let filename = `masterpiece-${counter1}.png`;
         zip.file(filename, blob);
         counter1++;
