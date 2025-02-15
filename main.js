@@ -1,5 +1,5 @@
 // main.js
-const AnimalJam = require('./animaljam'); // Adjust the path as needed
+const AnimalJam = require('./animaljam'); //
 const aj = new AnimalJam();
 
 var mpArr = [];
