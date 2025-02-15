@@ -129,8 +129,10 @@
 </div>`
     }
     function verifyUI() {
+      console.log("verifyUI called");
       var username = document.getElementById("userToSearch").value;
       if (username.trim() !== null && username.trim() !== undefined && username.trim() !== "") {
+        console.log("Username is valid");
         document.getElementById("alertUser").style.display = "none";
         document.getElementById("container1").innerHTML = `
         <h2 id="fromUser" class="mb-5"></h2>
@@ -142,6 +144,7 @@
         document.getElementById("search").disabled = "true";
         document.getElementById("rows").innerHTML = "";
       } else {
+        console.log("Username is invalid");
         document.getElementById("alertUser").innerHTML = "Please do not leave the search bar empty!";
         document.getElementById("alertUser").style.display = "block";
       }
@@ -159,6 +162,7 @@
       })
     }
     function sendData(username) {
+      console.log("sendData called with username:", username);
       mpArr = [];
       uname = "-" + username;
       var xhr = new XMLHttpRequest();
@@ -167,6 +171,7 @@
       xhr.setRequestHeader("Content-Type", "application/json");
       xhr.onreadystatechange = async function () {
         if (xhr.readyState === 4 && xhr.status === 200) {
+          console.log("Response received");
           try {
             var json = JSON.parse(xhr.responseText);
             var masterpieces = json.masterpieces;
@@ -238,6 +243,7 @@
         }
       };
       var data = JSON.stringify({ "user": username});
+      console.log("Sending request with data:", data);
       xhr.send(data);
     }
     async function downloadAllFiles() {
