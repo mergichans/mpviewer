@@ -2,7 +2,6 @@
 <html>
 
 <head>
-
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
@@ -11,11 +10,8 @@
   <title>Animal Jam Masterpiece Viewer</title>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" rel="stylesheet">
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet"
-    type="text/css">
-
+  <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
   <link href="./css-main.css" rel="stylesheet">
-
 </head>
 
 <body>
@@ -31,8 +27,7 @@
         <div class="col-md-10 col-lg-8 col-xl-7 mx-auto">
           <div class="form-row">
             <div class="col-12 col-md-7 mb-2 mb-md-0">
-              <input class="form-control form-control-lg" type="text" id="userToSearch"
-                placeholder="Enter a username to search...">
+              <input class="form-control form-control-lg" type="text" id="userToSearch" placeholder="Enter a username to search...">
             </div>
             <div class="col-12 col-md-5">
               <div class="input-group-append btn-group">
@@ -45,115 +40,154 @@
             </div>
           </div>
           <br>
-          <div class="alert alert-info" id="alertUser">
-          </div>
+          <div class="alert alert-info" id="alertUser"></div>
         </div>
       </div>
     </div>
   </header>
   <section class="showcase" id="images-showcase">
     <div class="container-fluid p-0">
-      <div class="row no-gutters">
-
-
-
-      </div>
-      <div class="row no-gutters">
-
-
-      </div>
-      <div class="row no-gutters">
-
-
-      </div>
+      <div class="row no-gutters"></div>
+      <div class="row no-gutters"></div>
+      <div class="row no-gutters"></div>
     </div>
   </section>
 
   <section class="testimonials text-center bg-light" id="testmionials">
     <div class="container" id="container1">
       <h2 id="fromUser" class="mb-5"></h2>
-      <div class="row" id="rows">
-      </div>
+      <div class="row" id="rows"></div>
     </div>
   </section>
-  <!-- <div class="fixed-bottom bg-light text-center">
-    <a href="./decoder">Need to decode an .ajart or .ajgart file? Click here!</a>
-  </div> -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.6.0/jszip.js"></script>
-  <script>
+  <script type="module">
+    import { fetchMasterpieces } from './src/api.js';
+
     var mpArr = [];
     var uname = "";
     window.onload = function () {
       document.getElementById("alertUser").style.display = "none";
-      // document.getElementById("alertUser").innerHTML = `Sorry for the inconvenice, we are down for maintenance!`;
-      //document.getElementById("alertUser").style.display = "block";
       document.getElementById("donateShow").click();
     }
+
     function showPopup() {
       document.getElementById("donateDiv").innerHTML = `
-<div id="donate" class="modal fade" tabindex="-1" role="dialog">
-  <div class="modal-dialog">
-    <div class="modal-content">
-<h2 class="text-center">Buy me a coffee</h2>
-        <div class="modal-body">
-            <form action="https://www.paypal.com/cgi-bin/webscr" class="text-center" method="post">
-
-    <input type="hidden" name="business"
-        value="authxero@gmail.com">
-
-    <input type="hidden" name="cmd" value="_donations">
-
-    <input type="hidden" name="item_name" value="Buy me a coffee">
-    <input type="hidden" name="item_number" value="Animal Jam Masterpiece Viewer">
-    <input type="hidden" name="currency_code" value="USD">
-
-    <input type="image" name="submit"
-    src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif"
-    alt="Donate">
-    <img alt="" width="1" height="1"
-    src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" >
-
-</form>
-        </div>
-<br>
-<br>
-<h3 class="text-center">Find a bug or have suggestions?</h2>
-<p class="text-center">Email me at authxero@gmail.com</p>
-<br>
-<br>
-<p class="text-center">Disclaimer: This website was made for educational purposes!</p>
-    </div>
-  </div>
-</div>`
+        <div id="donate" class="modal fade" tabindex="-1" role="dialog">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <h2 class="text-center">Buy me a coffee</h2>
+              <div class="modal-body">
+                <form action="https://www.paypal.com/cgi-bin/webscr" class="text-center" method="post">
+                  <input type="hidden" name="business" value="authxero@gmail.com">
+                  <input type="hidden" name="cmd" value="_donations">
+                  <input type="hidden" name="item_name" value="Buy me a coffee">
+                  <input type="hidden" name="item_number" value="Animal Jam Masterpiece Viewer">
+                  <input type="hidden" name="currency_code" value="USD">
+                  <input type="image" name="submit" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif" alt="Donate">
+                  <img alt="" width="1" height="1" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif">
+                </form>
+              </div>
+              <br>
+              <br>
+              <h3 class="text-center">Find a bug or have suggestions?</h3>
+              <p class="text-center">Email me at authxero@gmail.com</p>
+              <br>
+              <br>
+              <p class="text-center">Disclaimer: This website was made for educational purposes!</p>
+            </div>
+          </div>
+        </div>`;
     }
+
     function verifyUI() {
       var username = document.getElementById("userToSearch").value;
       window.stop();
       if (username.trim() !== null && username.trim() !== undefined && username.trim() !== "") {
-        //if(username.toLowerCase().trim() == "\x68\x79\x65\x6e\x69\x6e\x65\x31"){
-        //document.getElementById("alertUser").innerHTML = "Why would you search such a thing? Shame on you!";
-        //document.getElementById("alertUser").style.display = "block";
-        //}
-        //else{
         document.getElementById("alertUser").style.display = "none";
         document.getElementById("container1").innerHTML = `
-        <h2 id="fromUser" class="mb-5"></h2>
-        <div class="row" id="rows">
-        </div>`;
-        sendData(username)
+          <h2 id="fromUser" class="mb-5"></h2>
+          <div class="row" id="rows"></div>`;
+        sendData(username);
         document.getElementById("alertUser").innerHTML = `Please wait while we retrieve ${username}'s masterpieces...`;
         document.getElementById("alertUser").style.display = "block";
         document.getElementById("search").disabled = "true";
         document.getElementById("rows").innerHTML = "";
-        //  }
-      }
-      else {
+      } else {
         document.getElementById("alertUser").innerHTML = "Please do not leave the search bar empty!";
         document.getElementById("alertUser").style.display = "block";
       }
     }
+
+    async function sendData(username) {
+      mpArr = [];
+      uname = "-" + username;
+      try {
+        const domain = document.getElementById("domain").value;
+        const json = await fetchMasterpieces(username, domain);
+        const masterpieces = json.masterpieces;
+        if (masterpieces.length == 0) {
+          document.getElementById("alertUser").innerHTML = `No masterpieces found for ${username}!`;
+          document.getElementById("alertUser").style.display = "block";
+          document.getElementById("search").removeAttribute("disabled");
+          document.getElementById("fromUser").innerHTML = "";
+          return;
+        }
+        document.getElementById("fromUser").innerHTML = "Masterpieces from " + username;
+        var newHTML = document.getElementById("rows").innerHTML;
+        var counter = 0;
+        for (var i = 0; i < masterpieces.length; i++) {
+          var currentMP = masterpieces[i];
+          var data2 = await imageExists(currentMP);
+          while (data2 !== undefined) {
+            if (data2.result == true) {
+              var currentMPs = document.getElementById("rows").innerHTML;
+              var moduleName = "myModal" + i;
+              newHTML = currentMPs += `
+                <div class="col-lg-4">
+                  <div class="testimonial-item mx-auto mb-4 mb-lg-0">
+                    <img class="img-fluid mb-3" src="${currentMP}" alt="" />
+                    <button type="button" class="btn mb-3 btn-primary" data-toggle="modal" data-target="#${moduleName}">Show Image</button>
+                  </div>
+                </div>
+                <div id="${moduleName}" class="modal fade" tabindex="-1" role="dialog">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-body">
+                        <img class="img-responsive img-fluid" src="${currentMP}" />
+                      </div>
+                      <a href="./download?url=${currentMP}" target="_blank">Download</a>
+                    </div>
+                  </div>
+                </div>`;
+              mpArr.push(currentMP);
+            }
+            counter++;
+            if (counter >= 18) {
+              document.getElementById("rows").innerHTML = newHTML;
+              counter = 0;
+            }
+            break;
+          }
+          document.getElementById("rows").innerHTML = newHTML;
+          document.getElementById("alertUser").innerHTML = `Successfully retrieved ${username}'s masterpieces!`;
+          document.getElementById("alertUser").style.display = "block";
+          document.getElementById("search").removeAttribute("disabled");
+        }
+        document.getElementById("container1").innerHTML = document.getElementById("container1").innerHTML += `
+          <div class="col-12 col-md-5 mx-auto">
+            <button class="btn btn-block btn-lg btn-primary" onclick="downloadAllFiles()" id="exportAll">Export all</button>
+          </div>`;
+      } catch (error) {
+        document.getElementById("alertUser").innerHTML = "Error in retrieving masterpieces! Please try again!";
+        document.getElementById("alertUser").style.display = "block";
+        document.getElementById("search").removeAttribute("disabled");
+        document.getElementById("fromUser").innerHTML = "";
+        console.log(error);
+      }
+    }
+
     function imageExists(url) {
       return new Promise(function (resolve, reject) {
         var img = new Image();
@@ -164,98 +198,9 @@
           resolve({ result: false });
         };
         img.src = url;
-      })
+      });
     }
-    function sendData(username) {
-      mpArr = [];
-      uname = "-" + username;
-      var xhr = new XMLHttpRequest();
-      var url = "http://localhost:8080/https://animal-jam-api.nl/api/masterpiece/search?domain=" + document.getElementById("domain").value;
-      xhr.open("POST", url, true);
-      xhr.setRequestHeader("Content-Type", "application/json");
-      xhr.setRequestHeader("x-requested-with", "XMLHttpRequest");
-      xhr.onreadystatechange = async function () {
-        console.log(`Ready state: ${xhr.readyState}, Status: ${xhr.status}`);
-        if (xhr.readyState === 4) {
-          if (xhr.status === 200) {
-            try {
-              var json = JSON.parse(xhr.responseText);
-              var masterpieces = json.masterpieces;
-              if (masterpieces.length == 0) {
-                document.getElementById("alertUser").innerHTML = `No masterpieces found for ${username}!`;
-                document.getElementById("alertUser").style.display = "block";
-                document.getElementById("search").removeAttribute("disabled");
-                document.getElementById("fromUser").innerHTML = "";
-                return;
-              }
-              document.getElementById("fromUser").innerHTML = "Masterpieces from " + username;
-              var newHTML = document.getElementById("rows").innerHTML;
-              var counter = 0;
-              for (var i = 0; i < masterpieces.length; i++) {
-                var currentMP = masterpieces[i];
-                var data2 = await imageExists(currentMP);
-                while (data2 !== undefined) {
-                  if (data2.result == true) {
-                    var currentMPs = document.getElementById("rows").innerHTML;
-                    var moduleName = "myModal" + i;
-                    newHTML = currentMPs += `
-              <div class="col-lg-4">
-              <div class="testimonial-item mx-auto mb-4 mb-lg-0">
-               <img class="img-fluid mb-3" src="${currentMP}" alt="" />
-              <button type="button" class="btn mb-3 btn-primary" data-toggle="modal" data-target="#${moduleName}">Show Image</button>
-              </div>
-                </div>
-                <div id="${moduleName}" class="modal fade" tabindex="-1" role="dialog">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-body">
-                            <img class="img-responsive img-fluid" src="${currentMP}" />
-                        </div>
-                <a href="./download?url=${currentMP}" target="_blank">Download</a>
-                    </div>
-                  </div>
-                </div>`
-                    mpArr.push(currentMP)
-                  }
-                  counter++;
-                  if (counter >= 18) {
-                    document.getElementById("rows").innerHTML = newHTML;
-                    counter = 0;
-                  }
-                  break;
-                }
-                document.getElementById("rows").innerHTML = newHTML;
-                document.getElementById("alertUser").innerHTML = `Successfully retrieved ${username}'s masterpieces!`;
-                document.getElementById("alertUser").style.display = "block";
-                document.getElementById("search").removeAttribute("disabled");
-              }
-              document.getElementById("container1").innerHTML = document.getElementById("container1").innerHTML += `
-                <div class="col-12 col-md-5 mx-auto">
-                  <button class="btn btn-block btn-lg btn-primary" onclick="downloadAllFiles()" id="exportAll">Export all</button>
-                </div>`;
-            } catch (error) {
-              document.getElementById("alertUser").innerHTML = "Error in retrieving masterpieces! Please try again!";
-              document.getElementById("alertUser").style.display = "block";
-              document.getElementById("search").removeAttribute("disabled");
-              document.getElementById("fromUser").innerHTML = "";
-              console.log(error);
-            }
-          } else if (xhr.status === 503) {
-            document.getElementById("alertUser").innerHTML = `Failed to retrieve ${username}'s masterpieces! Please try again!`;
-            document.getElementById("alertUser").style.display = "block";
-            document.getElementById("fromUser").innerHTML = "";
-            document.getElementById("search").removeAttribute("disabled");
-          } else {
-            document.getElementById("alertUser").innerHTML = `Error: Unable to retrieve masterpieces. Status: ${xhr.status}`;
-            document.getElementById("alertUser").style.display = "block";
-            document.getElementById("search").removeAttribute("disabled");
-          }
-        }
-      };
-      var data = JSON.stringify({ "user": username });
-      console.log(`Sending request to ${url} with data: ${data}`);
-      xhr.send(data);
-    }
+
     async function downloadAllFiles() {
       document.getElementById("exportAll").disabled = "true";
       let zip = new JSZip();
@@ -276,8 +221,7 @@
         elem.click();
         document.getElementById("exportAll").removeAttribute("disabled");
         document.getElementById("exportAll").innerHTML = `Successfully exported ${mpArr.length} masterpieces!`;
-      })
-
+      });
     }
   </script>
 </body>
