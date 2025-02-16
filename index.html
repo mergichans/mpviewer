@@ -73,36 +73,7 @@
       document.getElementById("donateShow").click();
     }
 
-    function showPopup() {
-      document.getElementById("donateDiv").innerHTML = `
-        <div id="donate" class="modal fade" tabindex="-1" role="dialog">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <h2 class="text-center">Buy me a coffee</h2>
-              <div class="modal-body">
-                <form action="https://www.paypal.com/cgi-bin/webscr" class="text-center" method="post">
-                  <input type="hidden" name="business" value="authxero@gmail.com">
-                  <input type="hidden" name="cmd" value="_donations">
-                  <input type="hidden" name="item_name" value="Buy me a coffee">
-                  <input type="hidden" name="item_number" value="Animal Jam Masterpiece Viewer">
-                  <input type="hidden" name="currency_code" value="USD">
-                  <input type="image" name="submit" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif" alt="Donate">
-                  <img alt="" width="1" height="1" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif">
-                </form>
-              </div>
-              <br>
-              <br>
-              <h3 class="text-center">Find a bug or have suggestions?</h3>
-              <p class="text-center">Email me at authxero@gmail.com</p>
-              <br>
-              <br>
-              <p class="text-center">Disclaimer: This website was made for educational purposes!</p>
-            </div>
-          </div>
-        </div>`;
-    }
-
-    function verifyUI() {
+    window.verifyUI = function() {
       var username = document.getElementById("userToSearch").value;
       window.stop();
       if (username.trim() !== null && username.trim() !== undefined && username.trim() !== "") {
